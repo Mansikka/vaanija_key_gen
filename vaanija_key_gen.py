@@ -72,21 +72,21 @@ class VaanijaGeyKen:
     while True:
       self.print_main_menu(print_disc)
       selection = input()
-      if selection not in ['1', '2', '3', '4']:
-        print('Invalid selection')
+      if selection == '1':
+        new_state = 'DISC'
+      elif selection == '2':
+        print_disc = not print_disc
+        continue
+      elif selection == '3':
+        new_state = 'GENERATE'
+      elif selection == '4':
+        new_state = 'GENERATEALL'
+      elif selection == '5':
+        new_state = 'EXIT'
       else:
-        if selection == '1':
-          new_state = 'DISC'
-        elif selection == '2':
-          print_disc = not print_disc
-          continue
-        elif selection == '3':
-          new_state = 'GENERATE'
-        elif selection == '4':
-          new_state = 'GENERATEALL'
-        else:
-          new_state = 'EXIT'
-        break
+        print('Invalid selection')
+        continue
+      break
     return new_state
 
   def print_disc_menu(self, active_order:list[int], options:list[int]):
