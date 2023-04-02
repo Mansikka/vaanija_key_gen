@@ -1,6 +1,6 @@
 import time
 import os
-
+from itertools import permutations
 
 
 
@@ -21,6 +21,9 @@ class VaanijaGeyKen:
    
   disc_order = [0,1,2,3,4]
 
+  spinner = ['|', '/', '-', '\\', '|' '/', '-', '\\']
+  spinner_frame = 0
+
    
   def __init__(self, source_file:str) -> None:
     try:
@@ -30,7 +33,12 @@ class VaanijaGeyKen:
     except:
       print('Could not read', source_file)
       exit()
-    
+  
+  def get_spinner(self) -> str:
+    self.spinner_frame += 1
+    if self.spinner_frame < 0 or self.spinner_frame >= len(self.spinner):
+      self.spinner_frame= 0
+    return self.spinner[self.spinner_frame]
 
   def get_disc_content(self, disc_number:int):
     if disc_number < 0 or disc_number > 4:
@@ -52,9 +60,10 @@ class VaanijaGeyKen:
     print()
     print('Select option')
     print('1: Select disc order')
-    print('2: Generate keywords')
-    print('3: Show/Hide disc content')
-    print('4: Exit')
+    print('2: Show/Hide disc content')
+    print('3: Generate keywords')
+    print('4: Generate all permutations')
+    print('5: Exit')
 
   def main_menu(self):
     """Main menu fuction"""
@@ -68,16 +77,16 @@ class VaanijaGeyKen:
       else:
         if selection == '1':
           new_state = 'DISC'
-          break
         elif selection == '2':
-          new_state = 'GENERATE'
-          break
-        elif selection == '3':
           print_disc = not print_disc
+          continue
+        elif selection == '3':
+          new_state = 'GENERATE'
+        elif selection == '4':
+          new_state = 'GENERATEALL'
         else:
           new_state = 'EXIT'
-          break
-
+        break
     return new_state
 
   def print_disc_menu(self, active_order:list[int], options:list[int]):
@@ -129,8 +138,7 @@ class VaanijaGeyKen:
         print('Starting count', len(position))
       else:
         print('Disc position 1', len(position))
-      index += 1
-    
+      index += 1    
 
   def generate_list(self):
     """Generates list of options"""
@@ -139,13 +147,14 @@ class VaanijaGeyKen:
     for disc in self.disc_order:
       disc_keys:list[str] = self.get_disc_keys(disc)
       self.print_generation(disc_position, possibilities)
+      print(self.get_spinner())
       time.sleep(1)
       for word in possibilities[disc_position]:
         if word[disc_position].lower() in disc_keys:
           possibilities[disc_position+1].append(word)
       disc_position += 1
-    final = possibilities[5]    
     self.print_generation(disc_position, possibilities)
+    final = possibilities[5] 
     print()
     print('Final results: ', len(final))
     print('Storing results in results.txt')
@@ -155,8 +164,47 @@ class VaanijaGeyKen:
       print(word, file=f)
     f.close()
     print('Done, file located at', filepath)
-    input('Press enter to return to main menu')
+    input('Press enter to return to main menu...')
     return 'MAIN'
+  
+  def print_all_top(self, current:int, max_results:int):    
+    os.system('cls')
+    print('Vaanija keygen 1.1 by Tommi Mansikka')  
+    print('GENERATING ALL PERMUTATIONS')
+    print('Generating permutation', current, '/', max_results)
+  
+  def generate_disc_result(self, disc_order) -> list[str]:
+    disc_position = 0
+    possibilities = [self.english_words, [], [], [], [], []]
+    for disc in disc_order:
+      disc_keys:list[str] = self.get_disc_keys(disc)
+      for word in possibilities[disc_position]:
+        if word[disc_position].lower() in disc_keys:
+          possibilities[disc_position+1].append(word)
+      disc_position += 1
+    return possibilities[5]
+
+  def generate_all_permutations(self):
+    order_set = list(permutations([0,1,2,3,4]))
+    current = 1
+    max_results = len(order_set)
+    filepath = os.path.join(os.getcwd(), 'all_permutations.txt')
+    f = open(filepath,'w')
+    for disc_order in order_set:
+      self.print_all_top(current, max_results)
+      print(self.get_spinner())
+      words = self.generate_disc_result(disc_order)
+      for word in words:
+        print(word, file=f)
+      current += 1
+      time.sleep(0.2)
+    f.close()    
+    self.print_all_top(current, max_results)
+    print('COMPLETE')
+    print('Results stored in', filepath)
+    input('Press enter to return to main menu...')
+    return 'MAIN'
+
   
   def close_program(self):
     print('Exiting...')
@@ -172,6 +220,8 @@ class VaanijaGeyKen:
             state = self.disc_menu()
         elif state == 'GENERATE':
             state = self.generate_list()
+        elif state == 'GENERATEALL':
+            state = self.generate_all_permutations()
         else:
             self.close_program()
 
