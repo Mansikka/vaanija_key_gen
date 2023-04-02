@@ -21,7 +21,7 @@ class VaanijaGeyKen:
    
   disc_order = [0,1,2,3,4]
 
-  spinner = ['|', '/', '-', '\\', '|' '/', '-', '\\']
+  spinner = ['|', '/', '-', '\\', '|', '/', '-', '\\']
   spinner_frame = 0
 
    
