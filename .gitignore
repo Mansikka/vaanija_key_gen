@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 input.txt
 results.txt
+all_permutations.txt
