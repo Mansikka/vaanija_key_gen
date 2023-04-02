@@ -1,5 +1,4 @@
 import time
-from english_words import get_english_words_set
 import os
 
 
@@ -9,6 +8,8 @@ import os
 
 
 class VaanijaGeyKen:
+
+  english_words = []
    
   discs = [
     ['u', 'a', 'o', 'c', 'i', 'q', 'y', 'd', 'j', 'p'],
@@ -21,8 +22,15 @@ class VaanijaGeyKen:
   disc_order = [0,1,2,3,4]
 
    
-  def __init__(self) -> None:
-    pass
+  def __init__(self, source_file:str) -> None:
+    try:
+      f = open(source_file, 'r')
+      self.english_words = f.readlines()
+      f.close()
+    except:
+      print('Could not read', source_file)
+      exit()
+    
 
   def get_disc_content(self, disc_number:int):
     if disc_number < 0 or disc_number > 4:
@@ -30,11 +38,6 @@ class VaanijaGeyKen:
         return
     disc:list = self.discs[disc_number]
     return ' '.join([key.upper() for key in disc])
-          
-  def english_words(self):
-    """Gets us already filtered list of words to shorten test"""
-    english_set = get_english_words_set(['web2'], alpha=True, lower=True)
-    return [x for x in english_set if len(x) == 5]
 
   def print_main_menu(self, show_disc):
     os.system('cls')
@@ -132,7 +135,7 @@ class VaanijaGeyKen:
   def generate_list(self):
     """Generates list of options"""
     disc_position = 0
-    possibilities = [self.english_words(), [], [], [], [], []]
+    possibilities = [self.english_words, [], [], [], [], []]
     for disc in self.disc_order:
       disc_keys:list[str] = self.get_disc_keys(disc)
       self.print_generation(disc_position, possibilities)
@@ -171,7 +174,7 @@ class VaanijaGeyKen:
         else:
             self.close_program()
 
-keyGen = VaanijaGeyKen()
+keyGen = VaanijaGeyKen('english_words.txt')
 keyGen.main()
 
 
