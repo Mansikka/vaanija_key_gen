@@ -149,7 +149,7 @@ class VaanijaGeyKen:
     print()
     print('Final results: ', len(final))
     print('Storing results in results.txt')
-    with open('input.txt','w') as fp:
+    with open('results.txt','w') as fp:
       for word in final:
           # write each item on a new line
           fp.write("%s\n" % word)
