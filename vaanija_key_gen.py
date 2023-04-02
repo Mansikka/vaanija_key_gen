@@ -118,7 +118,7 @@ class VaanijaGeyKen:
 
   def print_generation(self, disc_position, possibilities):    
     os.system('cls')
-    print('Vaanija keygen 1.0 by Tommi Mansikka')  
+    print('Vaanija keygen 1.1 by Tommi Mansikka')  
     print('GENERATING WORDS')
     print('Currently searching position:', disc_position)
     print('Current plausible words:')
@@ -149,11 +149,12 @@ class VaanijaGeyKen:
     print()
     print('Final results: ', len(final))
     print('Storing results in results.txt')
-    with open('results.txt','w') as fp:
-      for word in final:
-          # write each item on a new line
-          fp.write("%s\n" % word)
-    print('Done')
+    filepath = os.path.join(os.getcwd(), 'results.txt')
+    f = open(filepath,'w')
+    for word in final:
+      print(word, file=f)
+    f.close()
+    print('Done, file located at', filepath)
     input('Press enter to return to main menu')
     return 'MAIN'
   
