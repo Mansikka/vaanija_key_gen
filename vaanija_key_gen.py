@@ -117,7 +117,7 @@ class VaanijaGeyKen:
     os.system('cls')
     print('Vaanija keygen 1.0 by Tommi Mansikka')  
     print('GENERATING WORDS')
-    print('Currently searching position:', disc_position+1)
+    print('Currently searching position:', disc_position)
     print('Current plausible words:')
     print()
     index = 0
@@ -126,7 +126,7 @@ class VaanijaGeyKen:
         print('Starting count', len(position))
       else:
         print('Disc position 1', len(position))
-      index =+ 1
+      index += 1
     
 
   def generate_list(self):
