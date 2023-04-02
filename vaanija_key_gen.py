@@ -9,6 +9,7 @@ from itertools import permutations
 
 class VaanijaGeyKen:
 
+  version = '1.2'
   english_words = []
    
   discs = [
@@ -49,7 +50,7 @@ class VaanijaGeyKen:
 
   def print_main_menu(self, show_disc):
     os.system('cls')
-    print('Vaanija keygen 1.0 by Tommi Mansikka')  
+    print(f'Vaanija keygen {self.version} by Tommi Mansikka')  
     print('MAIN MENU')
     print('Current disc order:', ' '.join(str(x+1) for x in self.disc_order))
     if show_disc:
@@ -91,7 +92,7 @@ class VaanijaGeyKen:
 
   def print_disc_menu(self, active_order:list[int], options:list[int]):
     os.system('cls')
-    print('Vaanija keygen 1.0 by Tommi Mansikka')  
+    print(f'Vaanija keygen {self.version} by Tommi Mansikka')  
     print('DISC MENU')
     print('Current disc order:', ' '.join([str(disc+1) for disc in active_order]))
     print()
@@ -127,7 +128,7 @@ class VaanijaGeyKen:
 
   def print_generation(self, disc_position, possibilities):    
     os.system('cls')
-    print('Vaanija keygen 1.1 by Tommi Mansikka')  
+    print(f'Vaanija keygen {self.version} by Tommi Mansikka')  
     print('GENERATING WORDS')
     print('Currently searching position:', disc_position)
     print('Current plausible words:')
@@ -169,7 +170,7 @@ class VaanijaGeyKen:
   
   def print_all_top(self, current:int, max_results:int):    
     os.system('cls')
-    print('Vaanija keygen 1.1 by Tommi Mansikka')  
+    print(f'Vaanija keygen {self.version} by Tommi Mansikka')  
     print('GENERATING ALL PERMUTATIONS')
     print('Generating permutation', current, '/', max_results)
   
